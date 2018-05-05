@@ -1,4 +1,4 @@
-module BinaryNat (BinaryNat(..), zero, succ, add, mul) where
+module BinaryNat (BinaryNat, zero, succ, add, mul) where
 
 import qualified Prelude
 import Boolean
