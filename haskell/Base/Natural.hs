@@ -1,8 +1,8 @@
-module Natural (Natural, zero, succ, add, mul) where
+module Base.Natural (Natural, zero, succ, add, mul) where
 
 import qualified Prelude
-import qualified PeanoNat
-import qualified BinaryNat
+import qualified Base.PeanoNat as PeanoNat
+import qualified Base.BinaryNat as BinaryNat
 
 class Natural nat where
     zero :: nat

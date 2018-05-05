@@ -1,4 +1,4 @@
-module PeanoNat (PeanoNat, zero, succ, add, mul) where
+module Base.PeanoNat (PeanoNat, zero, succ, add, mul) where
 
 import qualified Prelude
 

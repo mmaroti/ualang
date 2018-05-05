@@ -1,7 +1,7 @@
-module BinaryNat (BinaryNat, zero, succ, add, mul) where
+module Base.BinaryNat (BinaryNat, zero, succ, add, mul) where
 
 import qualified Prelude
-import Boolean
+import Base.Boolean as Boolean
 
 data BinaryNat = Falses | Digit BinaryNat Boolean
     deriving (Prelude.Show)
