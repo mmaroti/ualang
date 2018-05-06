@@ -1,4 +1,4 @@
-module Base.List (List(..), length, sum, prod) where
+module Base.List (List(..), length, sum, product, map) where
 
 import qualified Prelude
 import Base.Natural as Natural
@@ -13,9 +13,16 @@ length Null = zero
 length (Head _ tail) = succ (length tail)
 
 sum :: Natural nat => List nat -> nat
-sum Nill = zero
-sum Head head tail = add head (sum tail)
+sum Null = zero
+sum (Head head tail) = add head (sum tail)
 
-prod :: Natural nat => List nat -> nat
-prod Null = succ zero
-prod Head head tail = mul head (prod tail)
+product :: Natural nat => List nat -> nat
+product Null = succ zero
+product (Head head tail) = mul head (product tail)
+
+map :: (a -> b) -> List a -> List b
+map _ Null = Null
+map fun (Head head tail) = Head (fun head) (map fun tail)
+
+-- replicate :: Natural nat => nat -> a > List add
+-- replicate 
