@@ -3,7 +3,7 @@ module Domain.Domain(Domain(..), size, unit, boolean, small) where
 data Domain
     = Union [Domain]
     | Product [Domain]
-    | Power Domain Domain
+    | Power Domain [Domain]
     deriving (Show, Eq)
 
 size :: Domain -> Integer
