@@ -1,8 +1,8 @@
-module Natural (Natural, zero, succ, add, mul) where
+module Base.Natural (Natural, zero, succ, add, mul) where
 
-import Prelude hiding (succ)
-import qualified PeanoNat
-import qualified BinaryNat
+import qualified Prelude
+import qualified Base.PeanoNat as PeanoNat
+import qualified Base.BinaryNat as BinaryNat
 
 class Natural nat where
     zero :: nat
@@ -21,4 +21,9 @@ instance Natural BinaryNat.BinaryNat where
     succ = BinaryNat.succ
     add = BinaryNat.add
     mul = BinaryNat.mul
-    
+
+instance Natural Prelude.Integer where
+    zero = 0
+    succ x = x Prelude.+ 1
+    add x y = x Prelude.+ y
+    mul x y = x Prelude.* y

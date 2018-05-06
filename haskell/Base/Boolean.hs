@@ -1,4 +1,4 @@
-module Boolean (Boolean(..), not, and, or, xor, maj) where
+module Base.Boolean (Boolean(..), not, and, or, xor, maj) where
 
 import qualified Prelude
 
