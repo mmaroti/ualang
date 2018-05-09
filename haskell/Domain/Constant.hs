@@ -1,6 +1,6 @@
 module Domain.Constant(Constant(..), domainOf) where
 
-import Domain.Domain as Domain
+import qualified Domain.Domain as Domain
 
 data Constant
     = Unit
