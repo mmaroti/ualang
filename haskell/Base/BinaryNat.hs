@@ -1,32 +1,52 @@
-module Base.BinaryNat (BinaryNat, zero, succ, add, mul) where
+module Base.BinaryNat (BinaryNat, zero, succ, add, mul, test) where
 
 import qualified Prelude
-import Base.Boolean as Boolean
+import qualified Base.Boolean as Boolean
+import qualified Base.Natural as Natural
 
-data BinaryNat = Falses | Digit BinaryNat Boolean
+data BinaryNat = Start | Digit BinaryNat Boolean.Boolean
     deriving (Prelude.Show)
 
 zero :: BinaryNat
-zero = Falses
+zero = Start
 
 succ :: BinaryNat -> BinaryNat
-succ Falses = Digit Falses True
-succ (Digit x False) = Digit x True
-succ (Digit x True) = Digit (succ x) False
+succ Start = Digit Start Boolean.True
+succ (Digit x Boolean.False) = Digit x Boolean.True
+succ (Digit x Boolean.True) = Digit (succ x) Boolean.False
 
-addCarry :: Boolean -> BinaryNat -> BinaryNat -> BinaryNat
-addCarry False Falses x = x
-addCarry False x Falses = x
-addCarry True Falses x = succ x
-addCarry True x Falses = succ x
+decr :: BinaryNat -> BinaryNat
+decr Start = Prelude.undefined -- should not happen
+decr (Digit Start Boolean.True) = Start
+decr (Digit x Boolean.True) = Digit x Boolean.False
+decr (Digit x Boolean.False) = Digit (decr x) Boolean.True
+
+addCarry :: Boolean.Boolean -> BinaryNat -> BinaryNat -> BinaryNat
+addCarry Boolean.False Start x = x
+addCarry Boolean.False x Start = x
+addCarry Boolean.True Start x = succ x
+addCarry Boolean.True x Start = succ x
 addCarry a (Digit x b) (Digit y c) = Digit (addCarry d x y) e where
-    d = maj a b c
-    e = xor (xor a b) c
+    d = Boolean.maj a b c
+    e = Boolean.xor (Boolean.xor a b) c
 
 add :: BinaryNat -> BinaryNat -> BinaryNat
-add = addCarry False
+add = addCarry Boolean.False
 
 mul :: BinaryNat -> BinaryNat -> BinaryNat
-mul Falses _ = Falses
-mul (Digit x False) y = Digit (mul x y) False
-mul (Digit x True) y = add y (Digit (mul x y) False)
+mul Start _ = Start
+mul (Digit x Boolean.False) y = Digit (mul x y) Boolean.False
+mul (Digit x Boolean.True) y = add y (Digit (mul x y) Boolean.False)
+
+-- need proof that we never have Digit Start False
+
+test :: BinaryNat -> a -> (BinaryNat -> a) -> a
+test Start s _ = s
+test x _ f = f (decr x)
+
+instance Natural.Natural BinaryNat where
+    zero = zero
+    succ = succ
+    add = add
+    mul = mul
+    test = test
